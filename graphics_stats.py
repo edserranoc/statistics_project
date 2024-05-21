@@ -50,8 +50,8 @@ class graphs:
         y_ecdf, sorted_data = cls.empirical_cdf(data)
         # Compute the theoretical CDF
         if dist == 'Normal':
-            mu, lambd = params
-            ww = invgauss.cdf(sorted_data,mu = mu/lambd, scale = lambd,loc = 0)
+            mu, sigma = params
+            ww = norm.cdf(sorted_data,loc=mu,scale=sigma)
         elif dist == 'Lognormal':
             mu, sigma = params
             ww = norm.cdf(np.log(sorted_data),loc=mu,scale=sigma)
@@ -59,14 +59,14 @@ class graphs:
             theta = params[0]
             ww = expon.cdf(sorted_data,scale=theta)
         elif dist == 'Gamma':
-            alpha, beta = params
-            ww = gamma.cdf(sorted_data,alpha,scale=1/beta)
+            alpha, beta_ = params
+            ww = gamma.cdf(sorted_data,alpha,scale=1/beta_)
         elif dist == 'Weibull':
             c, loc, scale = params
             ww = weibull_min.cdf(sorted_data,c,loc,scale)
         elif dist == 'Inverse Gaussian':
-            mu, lambd = params
-            ww = invgauss.cdf(sorted_data,mu = mu/lambd, scale = lambd,loc = 0)
+            mu, lam = params
+            ww = invgauss.cdf(sorted_data,mu = mu/lam, scale = lam,loc = 0)
         elif dist == 'Gumbel':
             mu, beta = params
             ww = gumbel_r.cdf(sorted_data,mu,beta)
